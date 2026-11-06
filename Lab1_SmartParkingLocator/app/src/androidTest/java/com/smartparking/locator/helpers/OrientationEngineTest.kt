@@ -1,4 +1,4 @@
-package com.smartparking.locator
+package com.smartparking.locator.helpers
 
 import android.view.Surface
 import androidx.test.ext.junit.runners.AndroidJUnit4

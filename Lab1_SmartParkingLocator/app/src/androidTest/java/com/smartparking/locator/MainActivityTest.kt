@@ -4,6 +4,8 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import com.smartparking.locator.monitor.MonitorViewModel
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Assert.*
 import org.junit.Rule
@@ -14,6 +16,8 @@ import org.junit.runner.RunWith
 class MainActivityTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
 
+    private val state get() = ViewModelProvider(compose.activity)[MonitorViewModel::class.java].state.value
+
     @Test fun dashboardShowsRequiredSections() {
         compose.onNodeWithText("Smart Parking Locator").assertIsDisplayed()
         compose.onNodeWithText("Акселерометр").assertIsDisplayed()
@@ -21,17 +25,17 @@ class MainActivityTest {
     }
     @Test fun listenersStopAndRestartWithLifecycle() {
         compose.waitUntil(10000) {
-            compose.activity.dashboard.acceleration != null && compose.activity.dashboard.magnetic != null
+            state.acceleration != null && state.magnetic != null
         }
         compose.activityRule.scenario.moveToState(Lifecycle.State.CREATED)
         compose.activityRule.scenario.onActivity {
-            assertFalse(it.dashboard.listening)
-            assertNull(it.dashboard.orientation)
+            assertFalse(state.listening)
+            assertNull(state.orientation)
         }
         compose.activityRule.scenario.moveToState(Lifecycle.State.RESUMED)
         compose.waitUntil(10000) {
-            compose.activity.dashboard.acceleration != null && compose.activity.dashboard.magnetic != null
+            state.acceleration != null && state.magnetic != null
         }
-        compose.activityRule.scenario.onActivity { assertTrue(it.dashboard.listening) }
+        compose.activityRule.scenario.onActivity { assertTrue(state.listening) }
     }
 }

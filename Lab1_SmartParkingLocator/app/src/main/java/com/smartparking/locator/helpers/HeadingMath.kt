@@ -1,4 +1,4 @@
-package com.smartparking.locator
+package com.smartparking.locator.helpers
 
 object HeadingMath {
     fun normalizeDegrees(degrees: Float): Float = ((degrees % 360f) + 360f) % 360f

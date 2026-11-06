@@ -1,4 +1,4 @@
-package com.smartparking.locator
+package com.smartparking.locator.helpers
 
 import android.hardware.SensorManager
 import android.view.Surface

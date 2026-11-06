@@ -1,4 +1,4 @@
-package com.smartparking.locator
+package com.smartparking.locator.helpers
 
 import org.junit.Assert.*
 import org.junit.Test
